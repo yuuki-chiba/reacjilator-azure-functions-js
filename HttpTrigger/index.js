@@ -103,6 +103,11 @@ const events = async (context, req) => {
     let lang = langcode[country];
     if(!lang) return;
 
+    // Delay to adjust the rise of the function app
+    const startTime = Date.now();
+    await sleep(Math.random() * 5000);
+    context.log(`Delay: ${Date.now() - startTime} [ms]`);
+
     let messages = await getMessage(context, item.channel, item.ts); 
     context.log(`Messages: ${JSON.stringify(messages)}`);
 
@@ -214,3 +219,6 @@ const postMessage = async (context, message, translation, lang, channel, emoji) 
     context.log(e);
   }
 };
+
+// Sleep
+const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
